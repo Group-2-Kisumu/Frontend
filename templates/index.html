@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasi - Turn Chats into Cashouts</title>
+    <style>
+        /* Base Reset & Variables */
+        :root {
+            --bg-color: #0d0f12;
+            --card-bg: #161a1f;
+            --text-main: #ffffff;
+            --text-muted: #8a939e;
+            --accent-green: #25d366; 
+            --accent-blue: #3b82f6;
+            --btn-hover: #1ebd59;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Utility Components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-green);
+            color: #000000;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .badge {
+            background: rgba(37, 211, 102, 0.1);
+            color: var(--accent-green);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Navigation Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(13, 15, 18, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s, padding 0.3s;
+        }
+
+        header.scrolled {
+            background: rgba(13, 15, 18, 0.95);
+            padding: 5px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #fff, var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            align-items: center;
+        }
+
+        nav ul a {
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        nav ul a:hover, nav ul a.active {
+            color: var(--text-main);
+        }
+
+        /* Interactive Split Hero Section */
+        .hero {
+            padding: 180px 0 100px 0;
+            background: radial-gradient(circle at 80% 20%, rgba(37, 211, 102, 0.12), transparent 50%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: var(--accent-green);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* Dynamic Live Chat Simulator */
+        .simulator-container {
+            background: #050709;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            overflow: hidden;
+            max-width: 420px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sim-header {
+            background: #0b141a;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sim-avatar {
+            width: 38px;
+            height: 38px;
+            background: var(--accent-green);
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .sim-status h4 { font-size: 0.95rem; font-weight: 600; }
+        .sim-status p { font-size: 0.75rem; color: var(--accent-green); margin: 0; }
+
+        .sim-body {
+            height: 320px;
+            padding: 20px;
+            background: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); /* WA standard seamless tile */
+            background-size: contain;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .msg {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInMsg 0.4s forwards;
+        }
+
+        @keyframes fadeInMsg {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg.sent {
+            background: #005c4b;
+            align-self: flex-end;
+            border-top-right-radius: 2px;
+        }
+
+        .msg.received {
+            background: #202c33;
+            align-self: flex-start;
+            border-top-left-radius: 2px;
+        }
+
+        .sim-footer {
+            background: #111b21;
+            padding: 12px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .sim-input {
+            flex: 1;
+            background: #2a3942;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 16px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        /* Value Proposition Scroll-Animations */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            padding: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .feature-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px) !important;
+            border-color: rgba(37, 211, 102, 0.2);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--accent-green);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--bg-color), #111418, var(--bg-color));
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 32px;
+            border-radius: 20px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero h1 { font-size: 2.6rem; }
+            .simulator-container { margin-top: 40px; }
+            nav ul { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="navbar">
+        <div class="container">
+            <a href="#" class="logo">KASI</a>
+            <nav>
+                <ul>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="https://api.whatsapp.com/send/?phone=%2B13025016052&text=Hello%21+I+was+referred+by+a+friend+%EF%BF%BD%0A%0A%28Ref%3A+%23faqs%29&type=phone_number&app_absent=0" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">Get Started</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Live Simulator -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="badge">Live Demo Below</span>
+                    <h1>Turn Your Chats into <span>Cashouts</span></h1>
+                    <p>Buy, sell, and swap crypto seamlessly with local currencies directly inside your WhatsApp chat. No extra apps or gas keys required.</p>
+                    <button class="btn" onclick="startSimulatedChat()">Try Demo Interaction</button>
+                </div>
+                
+                <!-- Interactive WhatsApp UI Sandbox -->
+                <div>
+                    <div class="simulator-container">
+                        <div class="sim-header">
+                            <div class="sim-avatar">A</div>
+                            <div class="sim-status">
+                                <h4>Kasi Pay Bot</h4>
+                                <p>online & active</p>
+                            </div>
+                        </div>
+                        <div class="sim-body" id="chatScreen">
+                            <div class="msg received">Hello! wave 👋 or type "sell" to convert crypto to local currency instantly.</div>
+                        </div>
+                        <div class="sim-footer">
+                            <input type="text" class="sim-input" id="chatInput" placeholder="Type 'sell' or 'balance'..." onkeypress="handleKeyPress(event)">
+                            <button class="btn" style="padding: 10px 18px; border-radius: 50%;" onclick="sendUserMessage()">➔</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section with Scroll Triggers -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Convert Crypto Instantly</h2>
+                <p>Kasi handles the complexity of decentralized rails natively inside your messaging interface.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💸</div>
+                    <h3>Convert Crypto to Cash</h3>
+                    <p>Sell your stablecoins or other major crypto assets and withdraw securely directly to your local bank account via WhatsApp link layers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Great P2P-Free Rates</h3>
+                    <p>Trade stablecoins seamlessly against local market pairs without dealing with erratic, scam-prone escrow environments.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Phone Number Transfers</h3>
+                    <p>No complicated wallet address hexadecimal arrays. Transfer crypto directly to any recipient using just their mobile number.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trusted Across Africa</h2>
+                <p>Empowering non-technical users to access decentralized dollar liquidity safely.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"Changing my digital gig wages straight into local fiat without learning complex exchanges is phenomenal."</p>
+                    <h4 style="margin-top:15px; color:var(--accent-green);">David O.</h4>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Sent money directly using my sister's phone number. The settlement happened within seconds."</p>
+                    <h4 style="margin-top:15px; color:var(--accent-green);">Amara M.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">
+            <p>&copy; 2026 Kasi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic Layer -->
+    <script>
+        // 1. Dynamic Header Scroll Logic
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Track active navigation links based on viewport metrics
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 2. Scroll Animation (Intersection Observer Reveal Engine)
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // 3. Automated & Free-text WhatsApp Simulation Engine
+        const chatScreen = document.getElementById('chatScreen');
+        const chatInput = document.getElementById('chatInput');
+
+        function appendMessage(text, side) {
+            const msgNode = document.createElement('div');
+            msgNode.className = `msg ${side}`;
+            msgNode.innerText = text;
+            chatScreen.appendChild(msgNode);
+            chatScreen.scrollTop = chatScreen.scrollHeight; 
+        }
+
+        function handleKeyPress(e) {
+            if(e.key === 'Enter') sendUserMessage();
+        }
+
+        function sendUserMessage() {
+            const val = chatInput.value.trim();
+            if(!val) return;
+            
+            appendMessage(val, 'sent');
+            chatInput.value = '';
+
+            // Dynamic logic parsing response simulated keywords
+            setTimeout(() => {
+                const query = val.toLowerCase();
+                if(query.includes('sell') || query.includes('cashout')) {
+                    appendMessage("⚡ Perfect. Processing payout. Enter the amount of USDT to cashout to local currency:", "received");
+                } else if(query.includes('balance')) {
+                    appendMessage("📊 Wallet Balance:\n• 142.50 USDT\n• 0.015 ETH", "received");
+                } else {
+                    appendMessage("🤖 Received! Kasi will automatically process this message string on your real integration hook.", "received");
+                }
+            }, 800);
+        }
+
+        // Demo sequence button
+        function startSimulatedChat() {
+            setTimeout(() => appendMessage("sell 50 USDT", "sent"), 300);
+            setTimeout(() => appendMessage("Processing $50.00 cashout. Local bank wire generated! Checking settlement rails... 📈", "received"), 1200);
+            setTimeout(() => appendMessage("Success! Fiat deposited straight to linked endpoint.", "received"), 2400);
+        }
+    </script>
+</body>
+</html>
