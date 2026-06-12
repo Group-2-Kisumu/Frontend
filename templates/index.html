@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasi - Turn Chats into Cashouts</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="navbar">
+        <div class="container">
+            <a href="#" class="logo">KASI</a>
+            <nav>
+                <ul>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="https://api.whatsapp.com/send/?phone=%2B13025016052&text=Hello%21+I+was+referred+by+a+friend+%EF%BF%BD%0A%0A%28Ref%3A+%23faqs%29&type=phone_number&app_absent=0" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">Get Started</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Live Simulator -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="badge">Live Demo Below</span>
+                    <h1>Turn Your Chats into <span>Cashouts</span></h1>
+                    <p>Buy, sell, and swap crypto seamlessly with local currencies directly inside your WhatsApp chat. No extra apps or gas keys required.</p>
+                    <button class="btn" onclick="startSimulatedChat()">Try Demo Interaction</button>
+                </div>
+                
+                <!-- Interactive WhatsApp UI Sandbox -->
+                <div>
+                    <div class="simulator-container">
+                        <div class="sim-header">
+                            <div class="sim-avatar">A</div>
+                            <div class="sim-status">
+                                <h4>Kasi Pay Bot</h4>
+                                <p>online & active</p>
+                            </div>
+                        </div>
+                        <div class="sim-body" id="chatScreen">
+                            <div class="msg received">Hello! wave 👋 or type "sell" to convert crypto to local currency instantly.</div>
+                        </div>
+                        <div class="sim-footer">
+                            <input type="text" class="sim-input" id="chatInput" placeholder="Type 'sell' or 'balance'..." onkeypress="handleKeyPress(event)">
+                            <button class="btn" style="padding: 10px 18px; border-radius: 50%;" onclick="sendUserMessage()">➔</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section with Scroll Triggers -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Convert Crypto Instantly</h2>
+                <p>Kasi handles the complexity of decentralized rails natively inside your messaging interface.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💸</div>
+                    <h3>Convert Crypto to Cash</h3>
+                    <p>Sell your stablecoins or other major crypto assets and withdraw securely directly to your local bank account via WhatsApp link layers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Great P2P-Free Rates</h3>
+                    <p>Trade stablecoins seamlessly against local market pairs without dealing with erratic, scam-prone escrow environments.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Phone Number Transfers</h3>
+                    <p>No complicated wallet address hexadecimal arrays. Transfer crypto directly to any recipient using just their mobile number.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trusted Across Africa</h2>
+                <p>Empowering non-technical users to access decentralized dollar liquidity safely.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"Changing my digital gig wages straight into local fiat without learning complex exchanges is phenomenal."</p>
+                    <h4 style="margin-top:15px; color:var(--accent-green);">David O.</h4>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Sent money directly using my sister's phone number. The settlement happened within seconds."</p>
+                    <h4 style="margin-top:15px; color:var(--accent-green);">Amara M.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">
+            <p>&copy; 2026 Kasi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic Layer -->
+    <script>
+        // 1. Dynamic Header Scroll Logic
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Track active navigation links based on viewport metrics
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 2. Scroll Animation (Intersection Observer Reveal Engine)
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // 3. Automated & Free-text WhatsApp Simulation Engine
+        const chatScreen = document.getElementById('chatScreen');
+        const chatInput = document.getElementById('chatInput');
+
+        function appendMessage(text, side) {
+            const msgNode = document.createElement('div');
+            msgNode.className = `msg ${side}`;
+            msgNode.innerText = text;
+            chatScreen.appendChild(msgNode);
+            chatScreen.scrollTop = chatScreen.scrollHeight; 
+        }
+
+        function handleKeyPress(e) {
+            if(e.key === 'Enter') sendUserMessage();
+        }
+
+        function sendUserMessage() {
+            const val = chatInput.value.trim();
+            if(!val) return;
+            
+            appendMessage(val, 'sent');
+            chatInput.value = '';
+
+            // Dynamic logic parsing response simulated keywords
+            setTimeout(() => {
+                const query = val.toLowerCase();
+                if(query.includes('sell') || query.includes('cashout')) {
+                    appendMessage("⚡ Perfect. Processing payout. Enter the amount of USDT to cashout to local currency:", "received");
+                } else if(query.includes('balance')) {
+                    appendMessage("📊 Wallet Balance:\n• 142.50 USDT\n• 0.015 ETH", "received");
+                } else {
+                    appendMessage("🤖 Received! Kasi will automatically process this message string on your real integration hook.", "received");
+                }
+            }, 800);
+        }
+
+        // Demo sequence button
+        function startSimulatedChat() {
+            setTimeout(() => appendMessage("sell 50 USDT", "sent"), 300);
+            setTimeout(() => appendMessage("Processing $50.00 cashout. Local bank wire generated! Checking settlement rails... 📈", "received"), 1200);
+            setTimeout(() => appendMessage("Success! Fiat deposited straight to linked endpoint.", "received"), 2400);
+        }
+    </script>
+</body>
+</html>
