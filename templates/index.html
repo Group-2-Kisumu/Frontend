@@ -27,28 +27,28 @@
         <div class="container">
             <div class="hero-grid">
                 <div>
-                    <span class="badge">Live Demo Below</span>
+                    <span class="badge">Active 24/7</span>
                     <h1>Turn Your Chats into <span>Cashouts</span></h1>
                     <p>Buy, sell, and swap crypto seamlessly with local currencies directly inside your WhatsApp chat. No extra apps or gas keys required.</p>
-                    <button class="btn" onclick="startSimulatedChat()">Try Demo Interaction</button>
+                    <a href="https://api.whatsapp.com/send/?phone=%2B13025016052&text=Hello%21+I+was+referred+by+a+friend+%EF%BF%BD%0A%0A%28Ref%3A+%23faqs%29&type=phone_number&app_absent=0" class="btn" target="_blank">Start Chat</a>
                 </div>
                 
-                <!-- Interactive WhatsApp UI Sandbox -->
+                <!-- Static WhatsApp UI Mockup with Staggered Animations -->
                 <div>
                     <div class="simulator-container">
                         <div class="sim-header">
-                            <div class="sim-avatar">A</div>
+                            <div class="sim-avatar">K</div>
                             <div class="sim-status">
                                 <h4>Kasi Pay Bot</h4>
                                 <p>online & active</p>
                             </div>
                         </div>
                         <div class="sim-body" id="chatScreen">
-                            <div class="msg received">Hello! wave 👋 or type "sell" to convert crypto to local currency instantly.</div>
-                        </div>
-                        <div class="sim-footer">
-                            <input type="text" class="sim-input" id="chatInput" placeholder="Type 'sell' or 'balance'..." onkeypress="handleKeyPress(event)">
-                            <button class="btn" style="padding: 10px 18px; border-radius: 50%;" onclick="sendUserMessage()">➔</button>
+                            <div class="msg received" style="animation-delay: 0.3s;">Hello! wave 👋 or type "sell" to convert crypto to local currency instantly.</div>
+                            <div class="msg sent" style="animation-delay: 1.2s;">sell 50 USDT</div>
+                            <div class="msg received" style="animation-delay: 2.1s;">⚡ Perfect. Converting 50 USDT. Payout of 68,500 NGN will be sent to your bank. Confirm?</div>
+                            <div class="msg sent" style="animation-delay: 3.0s;">Confirm</div>
+                            <div class="msg received" style="animation-delay: 3.9s;">Success! 68,500 NGN deposited straight to your account. 🚀</div>
                         </div>
                     </div>
                 </div>
@@ -186,48 +186,7 @@
             observer.observe(card);
         });
 
-        // 3. Automated & Free-text WhatsApp Simulation Engine
-        const chatScreen = document.getElementById('chatScreen');
-        const chatInput = document.getElementById('chatInput');
 
-        function appendMessage(text, side) {
-            const msgNode = document.createElement('div');
-            msgNode.className = `msg ${side}`;
-            msgNode.innerText = text;
-            chatScreen.appendChild(msgNode);
-            chatScreen.scrollTop = chatScreen.scrollHeight; 
-        }
-
-        function handleKeyPress(e) {
-            if(e.key === 'Enter') sendUserMessage();
-        }
-
-        function sendUserMessage() {
-            const val = chatInput.value.trim();
-            if(!val) return;
-            
-            appendMessage(val, 'sent');
-            chatInput.value = '';
-
-            // Dynamic logic parsing response simulated keywords
-            setTimeout(() => {
-                const query = val.toLowerCase();
-                if(query.includes('sell') || query.includes('cashout')) {
-                    appendMessage("⚡ Perfect. Processing payout. Enter the amount of USDT to cashout to local currency:", "received");
-                } else if(query.includes('balance')) {
-                    appendMessage("📊 Wallet Balance:\n• 142.50 USDT\n• 0.015 ETH", "received");
-                } else {
-                    appendMessage("🤖 Received! Kasi will automatically process this message string on your real integration hook.", "received");
-                }
-            }, 800);
-        }
-
-        // Demo sequence button
-        function startSimulatedChat() {
-            setTimeout(() => appendMessage("sell 50 USDT", "sent"), 300);
-            setTimeout(() => appendMessage("Processing $50.00 cashout. Local bank wire generated! Checking settlement rails... 📈", "received"), 1200);
-            setTimeout(() => appendMessage("Success! Fiat deposited straight to linked endpoint.", "received"), 2400);
-        }
 
         // Contact Form Submission Handler
         function handleContactSubmit(event) {
