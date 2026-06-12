@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasi - Turn Chats into Cashouts</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="navbar">
+        <div class="container">
+            <a href="#" class="logo">KASI</a>
+            <nav>
+                <ul>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="https://api.whatsapp.com/send/?phone=%2B13025016052&text=Hello%21+I+was+referred+by+a+friend+%EF%BF%BD%0A%0A%28Ref%3A+%23faqs%29&type=phone_number&app_absent=0" class="btn" style="padding: 10px 20px; font-size: 0.9rem;">Get Started</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Live Simulator -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="badge">Active 24/7</span>
+                    <h1>Turn Your Chats into <span>Cashouts</span></h1>
+                    <p>Buy, sell, and swap crypto seamlessly with local currencies directly inside your WhatsApp chat. No extra apps or gas keys required.</p>
+                    <a href="https://api.whatsapp.com/send/?phone=%2B13025016052&text=Hello%21+I+was+referred+by+a+friend+%EF%BF%BD%0A%0A%28Ref%3A+%23faqs%29&type=phone_number&app_absent=0" class="btn" target="_blank">Start Chat</a>
+                </div>
+                
+                <!-- Static WhatsApp UI Mockup with Staggered Animations -->
+                <div>
+                    <div class="simulator-container">
+                        <div class="sim-header">
+                            <div class="sim-avatar">K</div>
+                            <div class="sim-status">
+                                <h4>Kasi Pay Bot</h4>
+                                <p>online & active</p>
+                            </div>
+                        </div>
+                        <div class="sim-body" id="chatScreen">
+                            <div class="msg received" style="animation-delay: 0.3s;">Hello! wave 👋 or type "sell" to convert crypto to local currency instantly.</div>
+                            <div class="msg sent" style="animation-delay: 1.2s;">sell 50 USDT</div>
+                            <div class="msg received" style="animation-delay: 2.1s;">⚡ Perfect. Converting 50 USDT. Payout of 68,500 NGN will be sent to your bank. Confirm?</div>
+                            <div class="msg sent" style="animation-delay: 3.0s;">Confirm</div>
+                            <div class="msg received" style="animation-delay: 3.9s;">Success! 68,500 NGN deposited straight to your account. 🚀</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section with Scroll Triggers -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Convert Crypto Instantly</h2>
+                <p>Kasi handles the complexity of decentralized rails natively inside your messaging interface.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💸</div>
+                    <h3>Convert Crypto to Cash</h3>
+                    <p>Sell your stablecoins or other major crypto assets and withdraw securely directly to your local bank account via WhatsApp link layers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Great P2P-Free Rates</h3>
+                    <p>Trade stablecoins seamlessly against local market pairs without dealing with erratic, scam-prone escrow environments.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Phone Number Transfers</h3>
+                    <p>No complicated wallet address hexadecimal arrays. Transfer crypto directly to any recipient using just their mobile number.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trusted Across Africa</h2>
+                <p>Empowering non-technical users to access decentralized dollar liquidity safely.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"Changing my digital gig wages straight into local fiat without learning complex exchanges is phenomenal."</p>
+                    <h4 style="margin-top:15px; color:var(--accent-green);">David O.</h4>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Sent money directly using my sister's phone number. The settlement happened within seconds."</p>
+                    <h4 style="margin-top:15px; color:var(--accent-green);">Amara M.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get in Touch</h2>
+                <p>Have questions or want to partner with us? Drop us a message.</p>
+            </div>
+            <div class="contact-card">
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <!-- Spam Honeypot Field -->
+                    <input type="text" name="_honey" style="display:none">
+                    
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" id="contactName" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email Address</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="message" rows="5" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Send Message</button>
+                    <div id="contactFeedback" class="contact-feedback"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">
+            <p>&copy; 2026 Kasi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic Layer -->
+    <script>
+        // 1. Dynamic Header Scroll Logic
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Track active navigation links based on viewport metrics
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 2. Scroll Animation (Intersection Observer Reveal Engine)
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+
+
+        // Contact Form Submission Handler
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const feedback = document.getElementById('contactFeedback');
+            const submitBtn = form.querySelector('.btn-submit');
+            
+            feedback.style.color = 'var(--text-muted)';
+            feedback.innerText = 'Sending your message...';
+            submitBtn.disabled = true;
+            
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+            
+            fetch('https://formsubmit.co/ajax/petraclara20@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(response => {
+                if (response.ok) {
+                    feedback.style.color = 'var(--accent-green)';
+                    feedback.innerText = 'Thank you! Your message has been sent successfully.';
+                    form.reset();
+                } else {
+                    throw new Error('Failed to send message.');
+                }
+            })
+            .catch(error => {
+                feedback.style.color = '#ff4a4a';
+                feedback.innerText = 'Oops! There was a problem sending your message.';
+                console.error(error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
