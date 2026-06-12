@@ -411,3 +411,43 @@
             .simulator-container { margin-top: 40px; }
             nav ul { display: none; }
         }
+
+        /* Social Links styling */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--text-main);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .social-link.whatsapp:hover {
+            color: var(--accent-green);
+            border-color: rgba(37, 211, 102, 0.3);
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
+        }
+
+        .social-link.x:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
