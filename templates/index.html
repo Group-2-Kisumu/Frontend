@@ -104,6 +104,37 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get in Touch</h2>
+                <p>Have questions or want to partner with us? Drop us a message.</p>
+            </div>
+            <div class="contact-card">
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <!-- Spam Honeypot Field -->
+                    <input type="text" name="_honey" style="display:none">
+                    
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" id="contactName" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email Address</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="message" rows="5" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Send Message</button>
+                    <div id="contactFeedback" class="contact-feedback"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="container" style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">
             <p>&copy; 2026 Kasi. All rights reserved.</p>
@@ -196,6 +227,48 @@
             setTimeout(() => appendMessage("sell 50 USDT", "sent"), 300);
             setTimeout(() => appendMessage("Processing $50.00 cashout. Local bank wire generated! Checking settlement rails... 📈", "received"), 1200);
             setTimeout(() => appendMessage("Success! Fiat deposited straight to linked endpoint.", "received"), 2400);
+        }
+
+        // Contact Form Submission Handler
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const feedback = document.getElementById('contactFeedback');
+            const submitBtn = form.querySelector('.btn-submit');
+            
+            feedback.style.color = 'var(--text-muted)';
+            feedback.innerText = 'Sending your message...';
+            submitBtn.disabled = true;
+            
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+            
+            fetch('https://formsubmit.co/ajax/petraclara20@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(response => {
+                if (response.ok) {
+                    feedback.style.color = 'var(--accent-green)';
+                    feedback.innerText = 'Thank you! Your message has been sent successfully.';
+                    form.reset();
+                } else {
+                    throw new Error('Failed to send message.');
+                }
+            })
+            .catch(error => {
+                feedback.style.color = '#ff4a4a';
+                feedback.innerText = 'Oops! There was a problem sending your message.';
+                console.error(error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+            });
         }
     </script>
 </body>
